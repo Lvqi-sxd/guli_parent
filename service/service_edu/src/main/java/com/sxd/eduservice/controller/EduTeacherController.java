@@ -7,6 +7,7 @@ import com.sxd.commonutils.R;
 import com.sxd.eduservice.entity.EduTeacher;
 import com.sxd.eduservice.entity.vo.TeacherQuery;
 import com.sxd.eduservice.service.EduTeacherService;
+import com.sxd.servicedase.config.exceptionhandler.GuliException;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/eduservice/edu-teacher")
+@CrossOrigin //解决跨域问题
 public class EduTeacherController {
     //把service注入
     @Autowired
@@ -38,6 +40,12 @@ public class EduTeacherController {
     @GetMapping("findAll")
     public R findAllTeacher(){
         List<EduTeacher> list = teacherService.list(null);
+        try {
+            int i=10/0;
+        }catch (Exception e){
+            throw new GuliException(20003,"执行了自定义异常处理");
+        }
+
         return R.ok().data("items",list) ;
     }
     //逻辑删除讲师的方法
@@ -94,6 +102,8 @@ public class EduTeacherController {
         if(!StringUtils.isEmpty(end)){
             queryWrapper.le("gmt_create",end);
         }
+        //实现排序条件
+        queryWrapper.orderByDesc("gmt_create");
         //调用方法
 
         teacherService.page(pageTeacher,queryWrapper);
@@ -105,8 +115,6 @@ public class EduTeacherController {
     //添加讲师的方法
     @PostMapping("addTeacher")
     public R addTeacher(@RequestBody EduTeacher eduTeacher) {
-        System.out.println("333333333333");
-        System.out.println(eduTeacher);
         boolean save = teacherService.save(eduTeacher);
         if (save) {
             return R.ok();
@@ -118,12 +126,12 @@ public class EduTeacherController {
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id){
         EduTeacher eduTeacher = teacherService.getById(id);
-        System.out.println(eduTeacher);
         return R.ok().data("teacher",eduTeacher);
     }
     //讲师修改
     @PostMapping("updateTeacher")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
+        System.out.println("................-----------");
         boolean flag = teacherService.updateById(eduTeacher);
         if(flag){
             return R.ok();
