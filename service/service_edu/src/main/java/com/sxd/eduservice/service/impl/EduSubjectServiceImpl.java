@@ -66,7 +66,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
                 if(eduTwosubject.getParentId().equals(eduOneSubject.getId())){
                     TwoSubject twoSubject=new TwoSubject();
                     BeanUtils.copyProperties(eduTwosubject,twoSubject);
-                    System.out.println(twoSubject);
                     finalTwoSubjectList.add(twoSubject);
                 }
             }

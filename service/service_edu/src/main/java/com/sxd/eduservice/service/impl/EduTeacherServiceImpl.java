@@ -17,4 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeacher> implements EduTeacherService {
 
+    @Override
+    public boolean updateTeacherById(EduTeacher eduTeacher) {
+        int i = baseMapper.updateById(eduTeacher);
+        if (i<=0){
+            return false;
+        }else {
+            return true;
+        }
+
+    }
 }

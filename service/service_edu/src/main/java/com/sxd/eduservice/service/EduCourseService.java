@@ -15,4 +15,8 @@ import com.sxd.eduservice.entity.vo.CourseInfoVo;
 public interface EduCourseService extends IService<EduCourse> {
 
     String saveCourseTnfo(CourseInfoVo courseInfoVo);
+
+    CourseInfoVo getCourseInfo(String courseId);
+
+    void updateCourseInfo(CourseInfoVo courseInfoVo);
 }
