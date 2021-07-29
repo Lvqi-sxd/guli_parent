@@ -64,7 +64,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             List<TwoSubject> finalTwoSubjectList=new ArrayList<>();
             for (EduSubject eduTwosubject : twoSubjectList) {
                 if(eduTwosubject.getParentId().equals(eduOneSubject.getId())){
-                    System.out.println(eduTwosubject.getParentId()+"===="+eduOneSubject.getId());
                     TwoSubject twoSubject=new TwoSubject();
                     BeanUtils.copyProperties(eduTwosubject,twoSubject);
                     System.out.println(twoSubject);
@@ -72,7 +71,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
                 }
             }
             oneSubject.setChildren(finalTwoSubjectList);
-            System.out.println(finalTwoSubjectList);
             finalSubjectList.add(oneSubject);
         }
 
