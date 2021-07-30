@@ -126,10 +126,8 @@ public class EduTeacherController {
     //讲师修改
     @PostMapping("updateTeacher")
     public R updateTeacher(@RequestBody EduTeacher eduTeacher){
-        System.out.println("................-----------");
 //        boolean flag = teacherService.updateById(eduTeacher);
         boolean flag =teacherService.updateTeacherById(eduTeacher);
-        System.out.println(flag);
         if(flag){
             return R.ok();
         }else {
