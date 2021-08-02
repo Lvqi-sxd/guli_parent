@@ -1,4 +1,4 @@
-package com.sxd.eduservice.entity.subject;
+package com.sxd.eduservice.entity.vo;
 
 import lombok.Data;
 

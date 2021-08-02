@@ -55,7 +55,6 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencyManagement>
         <dependencies>
             <!--Spring Cloud-->

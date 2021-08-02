@@ -2,6 +2,7 @@ package com.sxd.eduservice.controller;
 
 
 import com.sxd.commonutils.R;
+import com.sxd.eduservice.entity.vo.CoursePublishVo;
 import com.sxd.eduservice.entity.vo.CourseInfoVo;
 import com.sxd.eduservice.service.EduCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,12 @@ public class EduCourseController {
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
+    }
+    //根据课程id查询课程确认信息
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id){
+        CoursePublishVo coursePublishVo=courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourseInfo",coursePublishVo);
     }
 
 }

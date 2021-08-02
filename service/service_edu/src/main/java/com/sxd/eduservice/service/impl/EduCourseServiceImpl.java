@@ -2,6 +2,7 @@ package com.sxd.eduservice.service.impl;
 
 import com.sxd.eduservice.entity.EduCourse;
 import com.sxd.eduservice.entity.EduCourseDescription;
+import com.sxd.eduservice.entity.vo.CoursePublishVo;
 import com.sxd.eduservice.entity.vo.CourseInfoVo;
 import com.sxd.eduservice.mapper.EduCourseMapper;
 import com.sxd.eduservice.service.EduCourseDescriptionService;
@@ -72,5 +73,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescription.setDescription(courseInfoVo.getDescription());
         courseDescriptionService.updateById(courseDescription);
 
+    }
+
+    @Override
+    public CoursePublishVo publishCourseInfo(String id) {
+        //调用Mapper
+        CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
+        return publishCourseInfo;
     }
 }
