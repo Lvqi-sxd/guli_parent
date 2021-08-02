@@ -20,7 +20,7 @@ public class TestEasyExcel {
 
 
         //实现读操作
-        String filename="D:\\write.xlsx";
+        String filename="D:\\01.xlsx";
         EasyExcel.read(filename,DemoData.class,new ExcelListener()).sheet().doRead();
 
     }
@@ -29,7 +29,6 @@ public class TestEasyExcel {
         List<DemoData> list=new ArrayList<>();
         for(int i=0;i<10;i++){
             DemoData data=new DemoData();
-            data.setSno(i);
             data.setSname("Make"+i);
             list.add(data);
         }

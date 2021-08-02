@@ -1,4 +1,4 @@
-package com.sxd.demo.excel;
+package com.sxd.oss.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DemoData {
     //设置表头名称
-    @ExcelProperty(value = "学生编号",index = 0)
-    private String sno;
-    @ExcelProperty(value = "学生姓名",index = 1)
-    private String  sname;
+    @ExcelProperty(value = "账号",index = 0)
+    private String accessKeyId;
+    @ExcelProperty(value = "密码",index = 1)
+    private String  accessKeySecret;
 }

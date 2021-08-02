@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
 
+    @Override
+    public void updateVideo(EduVideo eduVideo) {
+        baseMapper.updateById(eduVideo);
+    }
 }

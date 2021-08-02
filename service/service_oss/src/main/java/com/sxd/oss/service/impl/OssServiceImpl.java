@@ -1,7 +1,10 @@
 package com.sxd.oss.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.sxd.oss.excel.DemoData;
+import com.sxd.oss.excel.ExcelListener;
 import com.sxd.oss.service.OssService;
 import com.sxd.oss.utils.ContantPropertiesUtils;
 import org.joda.time.DateTime;
@@ -27,6 +30,10 @@ public class OssServiceImpl implements OssService {
         String accessKeyId = ContantPropertiesUtils.KEU_ID;
         String accessKeySecret = ContantPropertiesUtils.KEY_SECRET;
         String bucketName = ContantPropertiesUtils.BUCKET_NAME;
+        String filename1="D:\\01.xlsx";
+        ExcelListener excelListener= new ExcelListener();
+        EasyExcel.read(filename1, DemoData.class,excelListener).sheet().doRead();
+        excelListener.getAccessKeySecret();
 
 
         try {
