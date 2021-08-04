@@ -1,5 +1,6 @@
 package com.sxd.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sxd.eduservice.entity.EduVideo;
 import com.sxd.eduservice.mapper.EduVideoMapper;
 import com.sxd.eduservice.service.EduVideoService;
@@ -20,5 +21,12 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
     @Override
     public void updateVideo(EduVideo eduVideo) {
         baseMapper.updateById(eduVideo);
+    }
+
+    @Override
+    public void removeVideoByCourseId(String courseId) {
+        QueryWrapper<EduVideo> wrapper =new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        baseMapper.delete(wrapper);
     }
 }

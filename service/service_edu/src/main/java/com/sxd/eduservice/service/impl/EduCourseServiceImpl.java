@@ -2,12 +2,15 @@ package com.sxd.eduservice.service.impl;
 
 import com.sxd.eduservice.entity.EduCourse;
 import com.sxd.eduservice.entity.EduCourseDescription;
+import com.sxd.eduservice.entity.EduVideo;
 import com.sxd.eduservice.entity.vo.CoursePublishVo;
 import com.sxd.eduservice.entity.vo.CourseInfoVo;
 import com.sxd.eduservice.mapper.EduCourseMapper;
+import com.sxd.eduservice.service.EduChapterService;
 import com.sxd.eduservice.service.EduCourseDescriptionService;
 import com.sxd.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sxd.eduservice.service.EduVideoService;
 import com.sxd.servicedase.config.exceptionhandler.GuliException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,14 @@ import org.springframework.stereotype.Service;
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+    @Autowired
+    private EduChapterService chapterService;
+
+    @Autowired
+    private EduVideoService videoService;
+
+
     @Override
     public String saveCourseTnfo(CourseInfoVo courseInfoVo) {
         EduCourse eduCourse=new EduCourse();
@@ -80,5 +91,21 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         //调用Mapper
         CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
         return publishCourseInfo;
+    }
+
+    @Override
+    public void removeCourse(String courseId) {
+        //删除小节
+        videoService.removeVideoByCourseId(courseId);
+        //删除章节
+        chapterService.removeChapterByCourseId(courseId);
+        //删除描述
+        courseDescriptionService.removeById(courseId);
+        //删除课程
+        int result = baseMapper.deleteById(courseId);
+        if(result==0){
+            throw new GuliException(20001,"删除失败");
+        }
+
     }
 }
