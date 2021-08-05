@@ -1,5 +1,6 @@
 package com.sxd.eduservice.service.impl;
 
+import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sxd.eduservice.entity.EduChapter;
 import com.sxd.eduservice.entity.EduVideo;
@@ -9,7 +10,7 @@ import com.sxd.eduservice.mapper.EduChapterMapper;
 import com.sxd.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sxd.eduservice.service.EduVideoService;
-import com.sxd.servicedase.config.exceptionhandler.GuliException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

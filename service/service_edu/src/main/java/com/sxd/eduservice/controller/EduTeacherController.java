@@ -7,7 +7,6 @@ import com.sxd.commonutils.R;
 import com.sxd.eduservice.entity.EduTeacher;
 import com.sxd.eduservice.entity.vo.TeacherQuery;
 import com.sxd.eduservice.service.EduTeacherService;
-import com.sxd.servicedase.config.exceptionhandler.GuliException;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.sxd.eduservice.service.impl;
 
+import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.sxd.eduservice.entity.EduCourse;
 import com.sxd.eduservice.entity.EduCourseDescription;
 import com.sxd.eduservice.entity.EduVideo;
@@ -11,7 +12,7 @@ import com.sxd.eduservice.service.EduCourseDescriptionService;
 import com.sxd.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sxd.eduservice.service.EduVideoService;
-import com.sxd.servicedase.config.exceptionhandler.GuliException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
