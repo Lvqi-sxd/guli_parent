@@ -23,6 +23,7 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
 
     //查询所有banner
     @Cacheable(value = "banner",key = "'selectIndexList'")
+
     @Override
     public List<CrmBanner> selectAllBanner() {
 
