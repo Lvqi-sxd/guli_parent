@@ -5,8 +5,12 @@ import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.atguigu.eduservice.entity.vo.CourseQuery;
 import com.atguigu.eduservice.service.EduCourseService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +32,33 @@ public class EduCourseController {
     private EduCourseService courseService;
 
     //课程列表 基本实现
-    //TODO  完善条件查询带分页
+    //条件查询带分页查询
+    @PostMapping("pageCourseCondition/{current}/{limit}")
+    public R pageTeacherCondition(@PathVariable long current,
+                                  @PathVariable long limit,
+                                  @RequestBody(required = false) CourseQuery courseQuery){
+        Page<EduCourse> pageCourse=new Page<>(current,limit);
+        //构建条件
+        QueryWrapper<EduCourse> queryWrapper=new QueryWrapper<>();
+        String title=courseQuery.getTitle();
+        String status=courseQuery.getStatus();
+
+        if(!StringUtils.isEmpty(title)){
+            queryWrapper.like("title",title);
+        }
+        if(!StringUtils.isEmpty(status)){
+            queryWrapper.eq("status",status);
+        }
+        //实现排序条件
+        queryWrapper.orderByDesc("gmt_create");
+        //调用方法
+
+        courseService.page(pageCourse,queryWrapper);
+        List<EduCourse> records = pageCourse.getRecords();
+        long total = pageCourse.getTotal();
+        return R.ok().data("total",total).data("rows",records);
+    }
+
     @GetMapping
     public R getCourseList() {
         List<EduCourse> list = courseService.list(null);

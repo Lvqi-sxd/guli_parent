@@ -1,4 +1,4 @@
-package com.atguigu.demo;
+package codedemo;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.junit.Test;
-
 
 /**
  * @author
@@ -27,7 +26,7 @@ public class CodeGenerator {
         // 2、全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir("E:\\work\\guli_parent\\service\\service_edu" + "/src/main/java");
+        gc.setOutputDir("E:\\work\\guli_parent\\service\\service_cms" + "/src/main/java");
 
         gc.setAuthor("testjava");
         gc.setOpen(false); //生成后是否打开资源管理器
@@ -44,6 +43,7 @@ public class CodeGenerator {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
+
         dsc.setUrl("jdbc:mysql://localhost:3306/guli?serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
@@ -53,7 +53,7 @@ public class CodeGenerator {
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("eduservice"); //模块名
+        pc.setModuleName("educms"); //模块名
         //包  com.atguigu.eduservice
         pc.setParent("com.atguigu");
         //包  com.atguigu.eduservice.controller
@@ -66,7 +66,7 @@ public class CodeGenerator {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
 
-        strategy.setInclude("crm_banner");
+        strategy.setInclude("edu_chapter");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀

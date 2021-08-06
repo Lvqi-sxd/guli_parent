@@ -48,7 +48,7 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
                 videoIds.add(videoSourceId);
             }
         }
-
+//消费者 ->feign->hystrix->ribbon->http client ->生产者
         //根据多个视频id删除多个视频
         if(videoIds.size()>0) {
             vodClient.deleteBatch(videoIds);
@@ -57,5 +57,10 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id",courseId);
         baseMapper.delete(wrapper);
+    }
+
+    @Override
+    public void updateVideo(EduVideo eduVideo) {
+        baseMapper.updateById(eduVideo);
     }
 }

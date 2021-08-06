@@ -36,7 +36,6 @@ public class EduVideoController {
         videoService.save(eduVideo);
         return R.ok();
     }
-
     //删除小节，删除对应阿里云视频
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id) {
@@ -56,7 +55,18 @@ public class EduVideoController {
         return R.ok();
     }
 
-    //修改小节 TODO
+    //修改小节
+    @PostMapping("updateVideo")
+    public R updateVideo(@RequestBody EduVideo eduVideo){
+        videoService.updateVideo(eduVideo);
+        return R.ok();
+    }
+    //根据id查询小节
+    @GetMapping("getVideoInfo/{videoId}")
+    public R getVideoInfo(@PathVariable String  videoId){
+        EduVideo eduVideo = videoService.getById(videoId);
+        return R.ok().data("videoInfo",eduVideo);
+    }
 
 }
 

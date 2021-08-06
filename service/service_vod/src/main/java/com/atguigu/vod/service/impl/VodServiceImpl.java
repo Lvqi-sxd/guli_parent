@@ -23,7 +23,6 @@ public class VodServiceImpl implements VodService {
 
     @Override
     public String uploadVideoAly(MultipartFile file) {
-
         try {
             //accessKeyId, accessKeySecret
             //fileName：上传文件原始名称
@@ -49,7 +48,6 @@ public class VodServiceImpl implements VodService {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
