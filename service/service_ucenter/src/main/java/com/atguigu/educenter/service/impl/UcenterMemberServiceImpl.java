@@ -1,11 +1,11 @@
 package com.atguigu.educenter.service.impl;
 
 import com.atguigu.commonutils.JwtUtils;
+import com.atguigu.commonutils.MD5;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.mapper.UcenterMemberMapper;
 import com.atguigu.educenter.service.UcenterMemberService;
-import com.atguigu.educenter.utils.MD5;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -104,5 +104,14 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         member.setIsDisabled(false);//用户不禁用
         member.setAvatar("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoj0hHXhgJNOTSOFsS4uZs8x1ConecaVOB8eIl115xmJZcT4oCicvia7wMEufibKtTLqiaJeanU2Lpg3w/132");
         baseMapper.insert(member);
+    }
+
+    //根据openid判断
+    @Override
+    public UcenterMember getOpenIdMember(String openid) {
+        QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
+        wrapper.eq("openid",openid);
+        UcenterMember member = baseMapper.selectOne(wrapper);
+        return member;
     }
 }

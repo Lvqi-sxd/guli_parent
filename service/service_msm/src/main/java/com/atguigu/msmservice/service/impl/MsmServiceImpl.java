@@ -41,8 +41,9 @@ public class MsmServiceImpl implements MsmService {
 
         try {
             //最终发送
-            CommonResponse response = client.getCommonResponse(request);
-            boolean success = response.getHttpResponse().isSuccess();
+//            CommonResponse response = client.getCommonResponse(request);
+//            boolean success = response.getHttpResponse().isSuccess();
+            boolean success = true;
             return success;
         }catch(Exception e) {
             e.printStackTrace();

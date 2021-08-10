@@ -2,6 +2,9 @@ package com.atguigu.eduservice.service.impl;
 
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
+import com.atguigu.eduservice.entity.EduTeacher;
+import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
+import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
@@ -10,14 +13,19 @@ import com.atguigu.eduservice.service.EduCourseDescriptionService;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduVideoService;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -126,6 +134,63 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if(result == 0) { //失败返回
             throw new GuliException(20001,"删除失败");
         }
+    }
+
+    @Override
+    public Map<String, Object> getCourseList(Page<EduCourse> pageParam, CourseFrontVo courseFrontVo) {
+        //构建条件
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        // 多条件组合查询
+        // mybatis学过 动态sql
+        String subjectParent= courseFrontVo.getSubjectParentId();
+        String subjectId = courseFrontVo.getSubjectId();
+        String countSort = courseFrontVo.getBuyCountSort();
+
+        //判断条件值是否为空，如果不为空拼接条件
+        if(!StringUtils.isEmpty(subjectParent)) {
+            //构建条件
+            wrapper.like("subject_parent_id",subjectParent);
+        }
+        if(!StringUtils.isEmpty(subjectId)) {
+            wrapper.eq("subject_id",subjectId);
+        }
+        if(!StringUtils.isEmpty(countSort)) {
+            wrapper.orderByDesc("buy_count");
+        }
+        if(!StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())) {
+            wrapper.orderByDesc("gmt_create");
+        }
+        if(!StringUtils.isEmpty(courseFrontVo.getPriceSort())) {
+            wrapper.orderByDesc("price");
+        }
+        baseMapper.selectPage(pageParam,wrapper);
+
+        //调用方法实现条件查询分页
+        List<EduCourse> records = pageParam.getRecords();
+        long current = pageParam.getCurrent();
+        long pages = pageParam.getPages();
+        long size = pageParam.getSize();
+        long total = pageParam.getTotal();
+
+        boolean hasNext = pageParam.hasNext();
+        boolean hasPrevious = pageParam.hasPrevious();
+
+        //把分页数据获取出来，放入map 中
+        Map<String,Object> map = new HashMap<>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+        return map;
+    }
+
+    //根据课程id，编写sql语句查询课程信息
+    @Override
+    public CourseWebVo getBaseCourseInfo(String courseId) {
+        return baseMapper.getBaseCourseInfo(courseId);
     }
 
 }

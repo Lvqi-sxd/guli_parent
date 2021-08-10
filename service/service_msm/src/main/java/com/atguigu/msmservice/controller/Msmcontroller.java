@@ -29,9 +29,11 @@ public class Msmcontroller {
     //发送短信的方法
     @GetMapping("send/{phone}")
     public R sendMsm(@PathVariable String phone){
+
         //从redis 获取验证码，如果获取到直接返回
         String code1 = redisTemplate.opsForValue().get(phone);
-        if(StringUtils.isEmpty(code1)){
+
+        if(!StringUtils.isEmpty(code1)){
             return R.ok();
         }
 
@@ -43,10 +45,12 @@ public class Msmcontroller {
 
         //调用service中短信发送方法
         boolean isSend = msmService.send(param,phone);
+
         if(isSend){
             //发送成功验证码放入redis中
             //设置有效时间
-            redisTemplate.opsForValue().set(phone,code,5, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(phone,"1234",5, TimeUnit.MINUTES);
+
             return R.ok();
 
         }else{
