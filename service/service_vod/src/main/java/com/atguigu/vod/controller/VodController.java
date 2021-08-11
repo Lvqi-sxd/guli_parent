@@ -5,6 +5,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.atguigu.commonutils.R;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.atguigu.vod.Utils.ConstantVodUtils;
@@ -58,5 +60,33 @@ public class VodController {
     public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList) {
         vodService.removeMoreAlyVideo(videoIdList);
         return R.ok();
+    }
+
+    //根据视频id获取视频凭证
+    @GetMapping("getPlayAuth/{id}")
+    public R getPlayAuth(@PathVariable String id){
+        try{
+            System.out.println("---------333------"+id);
+            //创建初始化对象
+            DefaultAcsClient client = InitVodCilent.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+            System.out.println("---------444------");
+            //创建获取凭证request和response对象
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+            System.out.println("---------555------");
+            GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();
+            System.out.println("---------111------"+id);
+            //向request里面设置视频id
+            request.setVideoId(id);
+            System.out.println("---------666------");
+
+            response = client.getAcsResponse(request);
+            System.out.println("---------777------");
+
+            System.out.println("---------222------"+response);
+            String playAuth = response.getPlayAuth();
+            return R.ok().data("playAuth",playAuth);
+        }catch (Exception e) {
+           throw new GuliException(20001,"获取凭证失败");
+        }
     }
 }
