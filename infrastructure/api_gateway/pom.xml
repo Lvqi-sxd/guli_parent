@@ -11,6 +11,11 @@
 
     <artifactId>api_gateway</artifactId>
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.atguigu</groupId>
             <artifactId>common_utils</artifactId>
